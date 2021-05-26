@@ -1,4 +1,4 @@
-# HDMC: Hierarchical Distribution Matching and Cantrastive learning
+# HDMC: Hierarchical Distribution Matching and Contrastive learning
 Code and data for using HDMC, a novel deep learning based framework for batch effect removal in scRNA-seq data. 
 
 ## Dependencies
