@@ -25,7 +25,7 @@ low_thr = 0.7  # lower threshold in the paper
 # nn parameter
 code_dim = 20
 batch_size = 50  # batch size for each cluster
-num_epochs = 2
+num_epochs = 2000
 base_lr = 1e-3
 lr_step = 200  # step decay of learning rates
 momentum = 0.9
