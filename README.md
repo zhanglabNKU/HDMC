@@ -38,7 +38,8 @@ For example:
 ```
 python hdmc.py -data_folder example/ -files batch1_seurat.csv batch2_seurat.csv -h_thr 0.9 -l_thr 0.5
 ```
-> This command will train an HDMC model for the selected files in the data_folder with two thresholds (-h_thr is the higher threshold and -l_thr is the lower one). When the training is finished, the datasets will be combined without batch effectes and the result file named combined.csv will be saved in the same data folder.
+> This command will train an HDMC model for the selected files in the data_folder with two thresholds (-h_thr is the higher threshold and -l_thr is the lower one). When the training is finished, the datasets will be combined without batch effectes and the result file named combined.csv will be saved in the same data folder.  
+
 In addition, some optional parameters are also available:
 * `-num_epochs`: number of the training epochs (default=2000)
 * `-code_dim`: dimension of the embedded code (default=20)
