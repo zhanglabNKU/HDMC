@@ -75,6 +75,7 @@ if __name__ == '__main__':
     nn_paras['num_inputs'] = len(dataset_list[0]['gene_sym'])
 
     # training
+    print("Training starts:")
     if len(dataset_file_list) == 2:
         model, loss_total_list, loss_reconstruct_list, loss_transfer_list, loss_adver_list\
             = training(dataset_list, cluster_pairs, nn_paras)
