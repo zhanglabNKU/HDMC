@@ -30,3 +30,12 @@ Rscript pre_processing.R example batch1.csv batch2.csv
 ```
 > The two datasets batch1.csv and batch2.csv (must be csv form) will be processed by the script and you will get three files saved in the same folder: the processed data named batch1_seurat.csv and batch2_seurat.csv, a file named metaneighbor.csv containing values of the cluster similarities between different batches.
 ### Batch correction
+Run the python script hdmc.py to combine the datasets and remove batch effects as follows:
+```
+python hdmc.py -data_folder folder -files file1 file2 ... -h_thr thr1 -l_thr thr2
+```
+For example:
+```
+python hdmc.py -data_folder example/ -files batch1_seurat.csv batch2_seurat.csv -h_thr 0.9 -l_thr 0.5
+```
+> This command will train an HDMC model for the selected files in the data_folder with two thresholds (-h_thr is the higher threshold and -l_thr is the lower one). When the training is finished, the datasets will be combined without batch effectes and the result file named combined.csv will be saved in the same data folder.
