@@ -20,7 +20,7 @@ cd HDMC/
 ## Usage
 Given several datasets (each treated as a batch) for combination, there are two main steps: (i) preprocess the datasets and run metaneighbor algorithm to compute cluster similarities; (ii) train an HDMC model for batch correction.
 ### Data preprocessing
-* Run the R script pre_processing.R as follows:
+Run the R script pre_processing.R as follows:
 ```
 Rscript pre_processing.R folder_name file1 file2 ...
 ```
@@ -28,3 +28,4 @@ For example:
 ```
 Rscript pre_processing.R example batch1.csv batch2.csv
 ```
+> The two datasets batch1.csv and batch2.csv (must be csv form) will be processed by the script and you will get three files saved in the same folder: the processed data named batch1_seurat.csv and batch2_seurat.csv, a file named metaneighbor.csv containing values of the cluster similarities between different batches.
