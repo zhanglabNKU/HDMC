@@ -53,3 +53,6 @@ Use the help command to print all the options:
 ```
 python hdmc.py --help
 ```
+
+## Data
+The download links of all the datasets are given in the folder named data.
