@@ -45,7 +45,7 @@ parser.add_argument('-data_folder', type=str, default='./', help='folder for loa
 parser.add_argument('-files', nargs='+', default=[], help='file names of different batches')
 parser.add_argument('-h_thr', type=float, default=0.9, help='higher threshold for contrastive learning')
 parser.add_argument('-l_thr', type=float, default=0.7, help='lower threshold for contrastive learning')
-parser.add_argument('-num_epochs', type=float, default=2, help='number of training epochs')
+parser.add_argument('-num_epochs', type=float, default=2000, help='number of training epochs')
 
 plt.ioff()
 
