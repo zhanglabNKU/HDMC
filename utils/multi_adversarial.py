@@ -62,7 +62,6 @@ def multi_training(dataset_list, cluster_pairs, nn_paras):
         gene_exp = dataset_list[i]['gene_exp'].transpose()
         cluster_labels = dataset_list[i]['cluster_labels']  # cluster labels do not overlap between datasets
         unique_labels = np.unique(cluster_labels)
-        print(i, unique_labels)
         max_cluster_numbers.append(np.max(unique_labels))
         # Random oversampling based on cell cluster sizes
         gene_exp, cluster_labels = RandomOverSampler(random_state=imblearn_seed).fit_sample(gene_exp, cluster_labels)
@@ -139,8 +138,6 @@ def training_epoch(epoch, model, netD_list, cluster_loader_dict, cluster_pairs, 
     l2_decay = nn_paras['l2_decay']
     gamma = nn_paras['gamma']
     cuda = nn_paras['cuda']
-    # lamda = 2. / (1. + np.exp(-10 * epoch)) - 1
-    # lamda = 2. / (1. + np.exp(-10 * epoch / num_epochs)) - 1
     lamda = 1
 
     # step decay of learning rate
@@ -169,10 +166,6 @@ def training_epoch(epoch, model, netD_list, cluster_loader_dict, cluster_pairs, 
         iter_data = iter(cluster_loader_dict[cls])
         iter_data_dict[cls] = iter_data
         num_iter = max(num_iter, len(cluster_loader_dict[cls]))
-    # use the largest dataset to define an epoch
-    # num_iter = 0
-    # for cls in cluster_loader_dict:
-    #     num_iter = max(num_iter, len(cluster_loader_dict[cls]))
 
     total_loss = 0
     total_reco_loss = 0
