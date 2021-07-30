@@ -29,3 +29,4 @@ For example:
 Rscript pre_processing.R example batch1.csv batch2.csv
 ```
 > The two datasets batch1.csv and batch2.csv (must be csv form) will be processed by the script and you will get three files saved in the same folder: the processed data named batch1_seurat.csv and batch2_seurat.csv, a file named metaneighbor.csv containing values of the cluster similarities between different batches.
+### Batch correction
