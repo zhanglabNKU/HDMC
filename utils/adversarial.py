@@ -61,7 +61,6 @@ def training(dataset_list, cluster_pairs, nn_paras):
         gene_exp = dataset_list[i]['gene_exp'].transpose()
         cluster_labels = dataset_list[i]['cluster_labels']  # cluster labels do not overlap between datasets
         unique_labels = np.unique(cluster_labels)
-        print(i, unique_labels)
         # Random oversampling based on cell cluster sizes
         gene_exp, cluster_labels = RandomOverSampler(random_state=imblearn_seed).fit_sample(gene_exp, cluster_labels)
 
@@ -132,8 +131,6 @@ def training_epoch(epoch, model, netD, cluster_loader_dict, cluster_pairs, nn_pa
     l2_decay = nn_paras['l2_decay']
     gamma = nn_paras['gamma']
     cuda = nn_paras['cuda']
-    # lamda = 2. / (1. + np.exp(-10 * epoch)) - 1
-    # lamda = 2. / (1. + np.exp(-10 * epoch / num_epochs)) - 1
     lamda = 1
 
     # step decay of learning rate
@@ -151,7 +148,6 @@ def training_epoch(epoch, model, netD, cluster_loader_dict, cluster_pairs, nn_pa
         {'params': model.decoder.parameters()},
         {'params': netD.parameters()}
     ], lr=learning_rate, weight_decay=l2_decay)
-    optimizerD = torch.optim.Adam(netD.parameters(), lr=learning_rate)
     bce = nn.BCELoss()
 
     model.train()
@@ -162,10 +158,6 @@ def training_epoch(epoch, model, netD, cluster_loader_dict, cluster_pairs, nn_pa
         iter_data = iter(cluster_loader_dict[cls])
         iter_data_dict[cls] = iter_data
         num_iter = max(num_iter, len(cluster_loader_dict[cls]))
-    # use the largest dataset to define an epoch
-    # num_iter = 0
-    # for cls in cluster_loader_dict:
-    #     num_iter = max(num_iter, len(cluster_loader_dict[cls]))
 
     total_loss = 0
     total_reco_loss = 0
@@ -223,35 +215,19 @@ def training_epoch(epoch, model, netD, cluster_loader_dict, cluster_pairs, nn_pa
                 continue
             mmd2_D = mix_rbf_mmd2(code_dict[cls_1], code_dict[cls_2], sigma_list)
             loss_transfer += mmd2_D * cluster_pairs[i, 2] + 0.001*(1 - mmd2_D) * (1 - cluster_pairs[i, 2])
-            # center1 = torch.mean(code_dict[cls_1], 0, keepdim=True)
-            # center2 = torch.mean(code_dict[cls_2], 0, keepdim=True)
-            # center_D = F.pairwise_distance(center1, center2)
-            # loss_transfer += center_D * cluster_pairs[i, 2]
 
         # adversarial loss for all samples
-        # netD.zero_grad()
         real_label = 1
         fake_label = 0
-        # real_set = discriminate_dict[10]
-        # fake_set = discriminate_dict[1]
-        # for cls in discriminate_dict:
-        #     if cls > 10:
-        #         real_set = torch.cat([real_set, discriminate_dict[cls]], dim=0)
-        #     elif 1 < cls < 10:
-        #         fake_set = torch.cat([fake_set, discriminate_dict[cls]], dim=0)
-        # print(real_set.shape, fake_set.shape)
 
         real_set = torch.from_numpy(np.array(real_list)).view(-1, 1).squeeze().cuda()
         fake_set = torch.from_numpy(np.array(fake_list)).view(-1, 1).squeeze().cuda()
-        # print(real_set.shape, fake_set.shape)
 
         label = torch.full((real_set.shape[0],), real_label, dtype=real_set.dtype, device=device)
         errD_real = bce(real_set, label)
-        D_x = real_set.mean().item()
 
         label = torch.full((fake_set.shape[0],), fake_label, dtype=fake_set.dtype, device=device)
         errD_fake = bce(fake_set, label)
-        D_G_z1 = fake_set.mean().item()
         D_loss = errD_real + errD_fake
 
         loss = loss_reconstruct + gamma * loss_transfer + D_loss
