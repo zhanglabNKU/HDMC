@@ -44,7 +44,8 @@ In addition, some optional parameters are also available:
 * `-code_dim`: dimension of the embedded code (default=20)
 * `-base_lr`: base learning rate for network training (default=1e-3)
 * `-lr_step`: step decay of learning rates (default=200)
-* `-gamma`: hyperparameter for adversarial learning
+* `-gamma`: hyperparameter for adversarial learning (default=1)  
+
 Under most circumstances, you don't need to change the optional parameters.  
 
 Use the help command to print all the options:
