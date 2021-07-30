@@ -8,7 +8,7 @@ cd HDMC/
 ## R Dependencies
 * Seurat 2.3.0
 
-## python Dependencies
+## Python Dependencies
 * Python 3.7.7
 * scikit-learn 0.23.2
 * pytorch 1.3.1
