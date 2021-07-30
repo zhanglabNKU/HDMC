@@ -46,6 +46,7 @@ In addition, some optional parameters are also available:
 * `-lr_step`: step decay of learning rates (default=200)
 * `-gamma`: hyperparameter for adversarial learning
 Under most circumstances, you don't need to change the optional parameters.  
+
 Use the help command to print all the options:
 ```
 python hdmc.py --help
